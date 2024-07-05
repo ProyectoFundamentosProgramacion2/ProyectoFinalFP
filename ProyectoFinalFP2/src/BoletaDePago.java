@@ -1,14 +1,17 @@
+import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 
     public class BoletaDePago {
         private static List<Empleado> empleados = new ArrayList<>();
 
         public static void main(String[] args) {
             Scanner scanner = new Scanner(System.in);
-            int opcion;
+            int opcion = 0;
 
             do {
                 System.out.println("\nMenu de Opciones:");
@@ -17,30 +20,34 @@ import java.util.Scanner;
                 System.out.println("3. Generar boleta de pago");
                 System.out.println("4. Salir");
                 System.out.print("Seleccione una opcion: ");
-                opcion = scanner.nextInt();
-                scanner.nextLine(); // Consumir la nueva línea
+                try {
+                    opcion = scanner.nextInt();
+                    scanner.nextLine(); // Consumir la nueva línea
 
-                switch (opcion) {
-                    case 1:
-                        registrarTrabajador(scanner);
-                        break;
-                    case 2:
-                        listarTrabajadores();
-                        break;
-                    case 3:
-                        generarBoletaDePago(scanner);
-                        break;
-                    case 4:
-                        System.out.println("Saliendo del programa...");
-                        break;
-                    default:
-                        System.out.println("Opcion no valida. Intente de nuevo.");
+                    switch (opcion) {
+                        case 1:
+                            registrarTrabajador(scanner);
+                            break;
+                        case 2:
+                            listarTrabajadores();
+                            break;
+                        case 3:
+                            generarBoletaDePago(scanner);
+                            break;
+                        case 4:
+                            System.out.println("Saliendo del programa...");
+                            break;
+                        default:
+                            System.out.println("Opcion no valida. Intente de nuevo.");
+                    }
+                }catch (InputMismatchException e){
+                    System.out.println("Entrada no valida. Por favor, ingrese un número.");
+                    scanner.nextLine(); // Consumir la entrada no válida
                 }
             } while (opcion != 4);
         }
 
         private static void registrarTrabajador(Scanner scanner) {
-            try {
                 System.out.print("Codigo de empleado: ");
                 String codigo = scanner.nextLine();
                 System.out.print("Nombre: ");
@@ -51,7 +58,7 @@ import java.util.Scanner;
                 String puesto = scanner.nextLine();
                 System.out.print("Sueldo: ");
                 double sueldo = scanner.nextDouble();
-                scanner.nextLine(); // Consumir la nueva línea
+                scanner.nextLine();
                 System.out.print("DNI: ");
                 String dni = scanner.nextLine();
                 System.out.print("Area de trabajo: ");
@@ -61,15 +68,7 @@ import java.util.Scanner;
                 empleados.add(empleado);
 
                 System.out.println("Empleado registrado exitosamente.");
-            }catch (NumberFormatException nfex) {
-                System.out.println("Error de formato numérico: " + nfex.getMessage());
-            }catch (Exception e) {
-                System.out.println("Error desconocido al registrar trabajador: " + e.getMessage());}
-                // Manejo para cualquier otro tipo de excepción no prevista
-                // Manejo específico para errores de conversión de datos (por ejemplo, al intentar convertir un string a número)
         }
-
-
 
         private static void listarTrabajadores() {
             if (empleados.isEmpty()) {
