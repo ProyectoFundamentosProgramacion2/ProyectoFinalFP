@@ -73,6 +73,10 @@ public class Empleado {
         this.areaDeTrabajo = areaDeTrabajo;
     }
 
+    public double sueldoFinal() {
+        return sueldo;
+    }
+
     @Override
     public String toString() {
         return "Empleado{" +
